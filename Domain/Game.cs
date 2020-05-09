@@ -50,9 +50,9 @@ namespace BattleCity.Domain
         private static IEnumerable<Map> LoadLevels()
         {
             yield return MapCreator.CreateMapFromText(Resource.Level1);
-            /*yield return MapCreator.CreateMapFromText(Resource.Level2);
+            yield return MapCreator.CreateMapFromText(Resource.Level2);
             yield return MapCreator.CreateMapFromText(Resource.Level3);
-            yield return MapCreator.CreateMapFromText(Resource.Level4);*/
+            yield return MapCreator.CreateMapFromText(Resource.Level4);
         }
     }
 }

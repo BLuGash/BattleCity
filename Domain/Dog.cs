@@ -24,7 +24,10 @@ namespace BattleCity.Domain
         public void Act()
         {
             if (map.Entities.ActiveEnemies.Any(enemy => enemy.Tank.Position == Position))
+            {
                 map.DestroyTank(map.Entities.ActiveEnemies.Where(enemy => enemy.Tank.Position == Position).FirstOrDefault().Tank);
+                map.KillDog(this);
+            }
             if (currentWay == null || currentIndex >= currentWay.Count || map.Entities.Tanks.All(tank => tank.Position == currentTankPos))
                 FindTank();
             if (currentWay != null && currentIndex < currentWay.Count)
@@ -50,19 +53,22 @@ namespace BattleCity.Domain
             var queue = new Queue<Point>();
             var track = new Dictionary<Point, Point>();
             queue.Enqueue(Position);
+            track.Add(Position, Game.DefaultPoint);
             while (queue.Count > 0)
             {
                 var currentPos = queue.Dequeue();
                 foreach (var nextPoint in GetNeighbours(currentPos)
                     .Where(nextPoint => !track.ContainsKey(nextPoint)))
                 {
-                        track.Add(nextPoint, currentPos);
+                        
                     if (nextPoint.CanMoveTo(map))
                     {
+                        track.Add(nextPoint, currentPos);
                         queue.Enqueue(nextPoint);
                     }
                     if (map.Entities.ActiveEnemies.Any(enemy => enemy.Tank.Position == nextPoint))
                     {
+                        track.Add(nextPoint, currentPos);
                         currentTankPos = nextPoint;
                         currentWay = ConvertWayToDirections(ConvertTrackInfoToWay(track, nextPoint));
                         return;
@@ -82,7 +88,7 @@ namespace BattleCity.Domain
         {
             var resultList = new List<Point>();
             var currentPoint = end;
-            while (track.ContainsKey(currentPoint))
+            while (track[currentPoint] != Game.DefaultPoint)
             {
                 resultList.Add(track[currentPoint]);
                 currentPoint = track[currentPoint];
@@ -93,10 +99,10 @@ namespace BattleCity.Domain
 
         private IEnumerable<Point> GetNeighbours(Point point)
         {
+            yield return point + new Size(0, 1);
             yield return point + new Size(-1, 0);
             yield return point + new Size(1, 0);
             yield return point + new Size(0, -1);
-            yield return point + new Size(0, 1);
         }
     }
 }

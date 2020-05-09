@@ -44,11 +44,13 @@ namespace BattleCity.Vision
                 Invalidate();
             };
             timer.Tick += OnTick;
-            timer.Start();
             Game.StageChanged += () =>
             {
+                if (Game.Stage == GameStage.Playing)
+                    timer.Start();
                 if (Game.Stage == GameStage.Lost || Game.Stage == GameStage.Won)
                     timer.Stop();
+                time = 0;
             };
         }
 
@@ -88,14 +90,16 @@ namespace BattleCity.Vision
                     enemy.Act();
                     enemy.Tank.WaitForShootPenalty();
                 }
-                foreach (var dog in Game.CurrentMap.Entities.Dogs)
+                var dogs = Game.CurrentMap.Entities.Dogs.Select(x => x).ToHashSet();
+                foreach (var dog in dogs)
                     dog.Act();
                 HandleButton(Game.keyPressed);
                 Game.CurrentMap.Player.WaitForShootPenalty();
             }
-            if (time == 160)
-            {
+            if (time % 200 == 0)
                 Game.CurrentMap.CreateEnemy(Game.CurrentMap.GetRandomEmptyPoint(rand), Direction.Up, 32, 1);
+            if (time == 400)
+            {
                 Game.CurrentMap.CreateDog(Game.CurrentMap.GetRandomEmptyPoint(rand));
                 time = 0;
             }
