@@ -36,7 +36,7 @@ namespace Tests
         [Test]
         public void TankDoesntMoveThroughWallsAndOutOfMap()
         {
-            var map = Map.CreateMapFromText(BattleCity.Properties.Resources.testmap);
+            var map = MapCreator.CreateMapFromText(BattleCity.Properties.Resources.testmap);
             map.Player.MoveTo(Direction.Up);
             Assert.AreEqual(new Point(1, 1), map.Player.Position);
             var map2 = Map.Default;
@@ -52,12 +52,12 @@ namespace Tests
         [Test]
         public void TankCanShoot()
         {
-            var map = Map.CreateMapFromText(BattleCity.Properties.Resources.testmap);
+            var map = MapCreator.CreateMapFromText(BattleCity.Properties.Resources.testmap);
             map.Player.Shoot();
-            Assert.AreEqual(1, map.BulletsFlying.Count);
+            Assert.AreEqual(1, map.Entities.BulletsFlying.Count);
             map.Player.Shoot();
-            Assert.AreEqual(2, map.BulletsFlying.Count);
-            Assert.AreEqual(map.BulletsFlying.FirstOrDefault().Direction, map.Player.Direction);
+            Assert.AreEqual(2, map.Entities.BulletsFlying.Count);
+            Assert.AreEqual(map.Entities.BulletsFlying.FirstOrDefault().Direction, map.Player.Direction);
         }
 
         [Test]

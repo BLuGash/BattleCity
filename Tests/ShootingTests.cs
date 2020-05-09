@@ -11,17 +11,17 @@ namespace Tests
         public void BulletDamages()
         {
             var map = Map.Default;
-            var tank = new Tank(new Point(2, 0), Direction.Down, 1, map);
+            map.CreateEnemy(new Point(2, 0), Direction.Down, 0, 1);
             map.Player.Shoot();
-            var bullet = (Bullet)map.BulletsFlying.First();
+            var bullet = (Bullet)map.Entities.BulletsFlying.First();
             bullet.CheckForCollisions();
-            Assert.AreEqual(2, map.Tanks.Count);
+            Assert.AreEqual(2, map.Entities.Tanks.Count);
             bullet.Move();
             bullet.CheckForCollisions();
-            Assert.AreEqual(2, map.Tanks.Count);
+            Assert.AreEqual(2, map.Entities.Tanks.Count);
             bullet.Move();
             bullet.CheckForCollisions();
-            Assert.AreEqual(1, map.Tanks.Count);
+            Assert.AreEqual(1, map.Entities.Tanks.Count);
         }
 
         [Test]
@@ -31,17 +31,17 @@ namespace Tests
             map.Player.MoveTo(Direction.Right);
             map.Player.MoveTo(Direction.Right);
             map.Player.Shoot();
-            ((Bullet)map.BulletsFlying.First()).CheckForCollisions();
-            Assert.AreEqual(0, map.BulletsFlying.Count);
+            ((Bullet)map.Entities.BulletsFlying.First()).CheckForCollisions();
+            Assert.AreEqual(0, map.Entities.BulletsFlying.Count);
         }
 
         [Test]
         public void BulletDestroysNearTheWall()
         {
-            var map = Map.CreateMapFromText(BattleCity.Properties.Resources.testmap);
+            var map = MapCreator.CreateMapFromText(BattleCity.Properties.Resources.testmap);
             map.Player.Shoot();
-            ((Bullet)map.BulletsFlying.First()).CheckForCollisions();
-            Assert.AreEqual(0, map.BulletsFlying.Count);
+            ((Bullet)map.Entities.BulletsFlying.First()).CheckForCollisions();
+            Assert.AreEqual(0, map.Entities.BulletsFlying.Count);
         }
     }
 }

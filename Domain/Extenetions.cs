@@ -24,7 +24,7 @@ namespace BattleCity.Domain
         public static bool CanMoveTo(this Point point, Map map)
         {
             return map.EmptyCells.Contains(point)
-                && map.Tanks.All(tank => tank.Position != (point))
+                && map.Entities.Tanks.All(tank => tank.Position != (point))
                 && point.InsideMap(map);
         }
 

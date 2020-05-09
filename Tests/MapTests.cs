@@ -10,17 +10,17 @@ namespace Tests
         [Test]
         public void MapShould()
         {
-            var map = new Map(3, 5, new Point(2, 2), Direction.Up, 4);
+            var map = new Map(3, 5, new Point(2, 2), Direction.Up, 1, 4);
             CheckForBasicConfiguration(map, 3, 5, new Point(2, 2), 4, 3 * 5);
         }
 
         [Test]
         public void MapFromText()
         {
-            var map = Map.CreateMapFromText(BattleCity.Properties.Resources.testmap);
+            var map = MapCreator.CreateMapFromText(BattleCity.Properties.Resources.testmap);
             CheckForBasicConfiguration(map, 16, 8, new Point(1, 1), 3, 14 * 6);
-            var map2 = Map.CreateMapFromText(BattleCity.Properties.Resources.testmap2);
-            CheckForBasicConfiguration(map2, 16, 13, new Point(14, 11), 17, 14 * 11 - 21);
+            var map2 = MapCreator.CreateMapFromText(BattleCity.Properties.Resources.testmap2);
+            CheckForBasicConfiguration(map2, 16, 16, new Point(14, 14), 17, 14 * 14 - 21);
         }
 
         private void CheckForBasicConfiguration(

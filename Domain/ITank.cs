@@ -16,5 +16,6 @@ namespace BattleCity.Domain
         void Shoot();
         void Rotate(Direction direction);
         void Damage(int HP);
+        void WaitForShootPenalty();
     }
 }

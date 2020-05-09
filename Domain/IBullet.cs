@@ -13,5 +13,6 @@ namespace BattleCity.Domain
         void Move();
         ITank GetEnemyNearby();
         bool ThereIsTankToDamage();
+        void CheckForCollisions();
     }
 }

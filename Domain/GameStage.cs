@@ -8,6 +8,7 @@ namespace BattleCity.Domain
 {
     public enum GameStage
     {
+        Start,
         Playing, 
         Won,
         Lost

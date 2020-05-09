@@ -61,7 +61,175 @@ namespace BattleCity {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 3
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BigWall {
+            get {
+                object obj = ResourceManager.GetObject("BigWall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bullet {
+            get {
+                object obj = ResourceManager.GetObject("Bullet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Dog {
+            get {
+                object obj = ResourceManager.GetObject("Dog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Enemy {
+            get {
+                object obj = ResourceManager.GetObject("Enemy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Heart {
+            get {
+                object obj = ResourceManager.GetObject("Heart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 1 10
+        ///##################
+        ///#             #  #
+        ///#    P        ####
+        ///#                #
+        ///#  ###     ##   ##
+        ///#    #      #    #
+        ///#    #      #    #
+        ///#    #    ########
+        ///#    #      #    #
+        ///#    #      #    #
+        ///#    #           #
+        ///###########      #
+        ///#   #        #####
+        ///#   #   #        #
+        ///#                #
+        ///#   #   ###   #  #
+        ///#   #         #  #
+        ///##################.
+        /// </summary>
+        internal static string Level1 {
+            get {
+                return ResourceManager.GetString("Level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 1 10
+        ///##################
+        ///#  ## ##   #     #
+        ///#  ##  #   ####  #
+        ///#          #     #
+        ///#   ##   ###  ## #
+        ///#                #
+        ///#   ###       #  #
+        ///#          #  #  #
+        ///#    #     #     #
+        ///#    #   ###   ###
+        ///#                #
+        ///#    #     #  ####
+        ///#  ###     #     #
+        ///#          #   ###
+        ///# #        #     #
+        ///###     ##########
+        ///#               P#
+        ///##################.
+        /// </summary>
+        internal static string Level2 {
+            get {
+                return ResourceManager.GetString("Level2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 1 10
+        ///##################
+        ///#    #  #        #
+        ///#    #  #        #
+        ///#    #  ####     #
+        ///#    #  #        #
+        ///#                #
+        ///#########   ##   #
+        ///#                #
+        ///#### P       #   #
+        ///#            #   #
+        ///#  #           ###
+        ///#  #             #
+        ///#  #         ##  #
+        ///#       #    #   #
+        ///# ##    #        #
+        ///#    ## #  ####  #
+        ///#  #        #    #
+        ///##################.
+        /// </summary>
+        internal static string Level3 {
+            get {
+                return ResourceManager.GetString("Level3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 1 10
+        ///##################
+        ///#  ##   P#       #
+        ///#   #    #       #
+        ///#     #  #       #
+        ///#                #
+        ///#               ##
+        ///#   #   ####  #  #
+        ///#   #         #  #
+        ///#   #      #  ####
+        ///#   #      #     #
+        ///#             ####
+        ///#                #
+        ///#######       ## #
+        ///#       ##       #
+        ///#        #    #  #
+        ///#     #####   # ##
+        ///#        #    #  #
+        ///##################.
+        /// </summary>
+        internal static string Level4 {
+            get {
+                return ResourceManager.GetString("Level4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tank {
+            get {
+                object obj = ResourceManager.GetObject("Tank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 3 4
         ///################
         ///#P             #
         ///#              #
@@ -78,13 +246,16 @@ namespace BattleCity {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 17
+        ///   Ищет локализованную строку, похожую на 17 2
         ///################
         ///#              #
         ///#       ########
         ///#              #
         ///#              #
         ///#####          #
+        ///#              #
+        ///#              #
+        ///#              #
         ///#              #
         ///#              #
         ///#      #########
@@ -100,7 +271,7 @@ namespace BattleCity {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 1
+        ///   Ищет локализованную строку, похожую на 1 2
         ///################
         ///#              #
         ///#              #
@@ -113,6 +284,16 @@ namespace BattleCity {
         internal static string testmap3 {
             get {
                 return ResourceManager.GetString("testmap3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Wall {
+            get {
+                object obj = ResourceManager.GetObject("Wall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

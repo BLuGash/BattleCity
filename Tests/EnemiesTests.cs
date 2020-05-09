@@ -12,8 +12,8 @@ namespace Tests
         {
             var map = Map.Default;
             map.CreateEnemy(new Point(2, 0), Direction.Down, 5, 1);
-            map.ActiveEnemies.First().Act();
-            Assert.AreEqual(1, map.BulletsFlying.Count);
+            map.Entities.ActiveEnemies.First().Act();
+            Assert.AreEqual(1, map.Entities.BulletsFlying.Count);
         }
 
         [Test]
@@ -21,22 +21,22 @@ namespace Tests
         {
             var map = Map.Default;
             map.CreateEnemy(new Point(2, 0), Direction.Down, 0, 1);
-            map.ActiveEnemies.First().Act();
-            Assert.AreEqual(0, map.BulletsFlying.Count);
+            map.Entities.ActiveEnemies.First().Act();
+            Assert.AreEqual(0, map.Entities.BulletsFlying.Count);
         }
 
         [Test]
         public void DoesntSeePlayerThroughWall()
         {
-            var map = Map.CreateMapFromText(BattleCity.Properties.Resources.testmap3);
-            map.CreateEnemy(new Point(1, 7), Direction.Down, 5, 1);
-            var enemy = map.ActiveEnemies.First();
+            var map = MapCreator.CreateMapFromText(BattleCity.Properties.Resources.testmap3);
+            map.CreateEnemy(new Point(7, 1), Direction.Down, 5, 1);
+            var enemy = map.Entities.ActiveEnemies.First();
             enemy.Act();
-            Assert.AreEqual(0, map.BulletsFlying.Count);
+            Assert.AreEqual(0, map.Entities.BulletsFlying.Count);
             enemy.Act();
             enemy.Act();
             enemy.Act();
-            Assert.IsTrue(0 == map.BulletsFlying.Count);
+            Assert.AreEqual(0, map.Entities.BulletsFlying.Count);
         }
     }
 }

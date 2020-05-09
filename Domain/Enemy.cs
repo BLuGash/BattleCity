@@ -11,49 +11,40 @@ namespace BattleCity.Domain
         private readonly Map map;
         public int VisionDistance { get; }
         private List<Direction> currentWay;
+        private Point currentPlayerPos = Game.DefaultPoint;
         private int currentIndex = 0;
         public Enemy(ITank tank, int visionDistance, Map map)
         {
             Tank = tank;
-            if (visionDistance > Math.Max(map.Width, map.Height))
+            if (visionDistance > map.Width + map.Height)
                 throw new ArgumentException("Enemy sees too good");
             VisionDistance = visionDistance;
             this.map = map;
         }
 
-        private static readonly Dictionary<Size, Direction> offsetToDirection = new Dictionary<Size, Direction>
-        {
-            {new Size(0, -1), Direction.Up},
-            {new Size(0, 1), Direction.Down},
-            {new Size(-1, 0), Direction.Left},
-            {new Size(1, 0), Direction.Right}
-        };
 
-        private static readonly Dictionary<Direction, Size> directionToOffset = new Dictionary<Direction, Size>
-        {
-            {Direction.Up, new Size(0, -1)},
-            {Direction.Down, new Size(0, 1)},
-            {Direction.Left, new Size(-1, 0)},
-            {Direction.Right, new Size(1, 0)}
-        };
 
         public void Act()
         {
-            if (!PlayerIsNearby())
+            if (GetAllPointsAhead().Any(point => map.Player.Position == point))
+                Tank.Shoot();
+            else if (!PlayerIsNearby())
                 MoveRandomly();
             else
             {
-                var playerPos = FindPlayer();
-                if (playerPos == Game.DefaultPoint && (currentWay == null || currentIndex >= currentWay.Count))
-                {
+                if (currentWay == null || currentIndex >= currentWay.Count || map.Player.Position != currentPlayerPos)
+                    FindPlayer();
+                if (currentWay == null || currentIndex >= currentWay.Count)
+                { 
                     MoveRandomly();
                     currentIndex = 0;
+                    return;
                 }
-                else
+                Tank.MoveTo(currentWay[currentIndex++]);
+                if (currentIndex >= currentWay.Count)
                 {
-                    Tank.MoveTo(currentWay[currentIndex++]);
-                    if (GetAllPointsAhead().Any(point => playerPos == point))
-                        Tank.Shoot();
+                    currentIndex = 0;
+                    currentWay = null;
                 }
             }
         }
@@ -63,21 +54,23 @@ namespace BattleCity.Domain
             var currentPoint = Tank.Position;
             for (var i = 0; i < VisionDistance; i++)
             {
-                currentPoint += directionToOffset[Tank.Direction];
+                currentPoint += Game.directionToOffset[Tank.Direction];
+                if (map.WallCells.Contains(currentPoint))
+                    break;
                 yield return currentPoint;
             }
         }
 
         private bool PlayerIsNearby()
         {
-            return map.Player.Position.X - Tank.Position.X
-                + map.Player.Position.Y - Tank.Position.Y <= VisionDistance;
+            return Math.Abs(map.Player.Position.X - Tank.Position.X)
+                + Math.Abs(map.Player.Position.Y - Tank.Position.Y) <= VisionDistance;
         }
 
-        public Point FindPlayer()
+        public void FindPlayer()
         {
             if (!PlayerIsNearby())
-                return Game.DefaultPoint;
+                return;
             var queue = new Queue<(int, Point)>();
             var track = new Dictionary<Point, Point>();
             queue.Enqueue((0, Tank.Position));
@@ -86,26 +79,29 @@ namespace BattleCity.Domain
                 var currentPos = queue.Dequeue();
                 foreach (var nextPoint in GetNeighbours(currentPos.Item2).Where(point => !track.ContainsKey(point)))
                 {
-                    if (nextPoint == map.Player.Position)
-                    {
-                        track.Add(nextPoint, currentPos.Item2);
-                        currentWay = ConvertWayToDirections(ConvertTrackInfoToWay(track, nextPoint));
-                        return nextPoint;
-                    }
-                    if (nextPoint.CanMoveTo(map))
-                    {
-                    track.Add(nextPoint, currentPos.Item2);
-                    queue.Enqueue((currentPos.Item1 + 1, nextPoint));
+                    if (currentPos.Item1 < VisionDistance)
+                    { 
+                        if (nextPoint.CanMoveTo(map))
+                        {
+                            queue.Enqueue((currentPos.Item1 + 1, nextPoint));
+                            track.Add(nextPoint, currentPos.Item2);
+                        }
+                        if (nextPoint == map.Player.Position)
+                        {
+                            track.Add(nextPoint, currentPos.Item2);
+                            currentPlayerPos = nextPoint;
+                            currentWay = ConvertWayToDirections(ConvertTrackInfoToWay(track, nextPoint));
+                            return;
+                        }
                     }
                 }
             }
-            return Game.DefaultPoint;
         }
 
         private static List<Direction> ConvertWayToDirections(IEnumerable<Point> way)
         {
             return way
-                .Zip(way.Skip(1), (begin, end) => offsetToDirection[new Size(end.X - begin.X, end.Y - begin.Y)])
+                .Zip(way.Skip(1), (begin, end) => Game.offsetToDirection[new Size(end.X - begin.X, end.Y - begin.Y)])
                 .ToList();
         }
 

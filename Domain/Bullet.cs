@@ -42,7 +42,7 @@ namespace BattleCity.Domain
 
         public ITank GetEnemyNearby()
         {
-            var enemy = map.Tanks
+            var enemy = map.Entities.Tanks
                 .Where(tank => tank != Sender && tank.Position == Position)
                 .FirstOrDefault();
             if (enemy == default(ITank))
@@ -57,7 +57,7 @@ namespace BattleCity.Domain
 
         public bool ThereIsTankToDamage()
         {
-            return map.Tanks
+            return map.Entities.Tanks
                 .Where(enemy => enemy != Sender)
                 .Any(enemy => enemy.Position == Position);
         }
