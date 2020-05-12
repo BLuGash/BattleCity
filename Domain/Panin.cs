@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleCity.Domain
 {
-    public class Dog
+    public class Panin
     {
         public Point Position { get; private set; }
         private readonly Map map;
-        List<Direction> currentWay;
-        private Point currentTankPos;
-        private int currentIndex = 0 ;
+        private List<Direction> currentWay;
+        private int currentIndex;
+        private Point currentDogPos = Game.DefaultPoint;
 
-        public Dog(Point position, Map map)
+        public Panin(Point position, Map map)
         {
             Position = position;
             this.map = map;
@@ -23,13 +21,10 @@ namespace BattleCity.Domain
 
         public void Act()
         {
-            if (map.Entities.ActiveEnemies.Any(enemy => enemy.Tank.Position == Position))
-            {
-                map.DestroyTank(map.Entities.ActiveEnemies.Where(enemy => enemy.Tank.Position == Position).FirstOrDefault().Tank);
-                map.KillDog(this);
-            }
-            if (currentWay == null || currentIndex >= currentWay.Count || map.Entities.Tanks.All(tank => tank.Position == currentTankPos))
-                FindTank();
+            if (map.Entities.Dogs.Any(dog => dog.Position == Position))
+                map.KillDog(map.Entities.Dogs.Where(dog => dog.Position == Position).First());
+            if (currentWay == null || currentIndex >= currentWay.Count || map.Entities.Dogs.All(dog => dog.Position == currentDogPos))
+                FindSomeDog();
             if (currentWay != null && currentIndex < currentWay.Count)
             {
                 MoveTo(currentWay[currentIndex++]);
@@ -48,7 +43,7 @@ namespace BattleCity.Domain
                 Position = nextPos;
         }
 
-        public void FindTank()
+        private void FindSomeDog()
         {
             var queue = new Queue<Point>();
             var track = new Dictionary<Point, Point>();
@@ -60,16 +55,15 @@ namespace BattleCity.Domain
                 foreach (var nextPoint in currentPos.GetNeighbours()
                     .Where(nextPoint => !track.ContainsKey(nextPoint)))
                 {
-                        
+
                     if (nextPoint.CanMoveTo(map))
                     {
                         track.Add(nextPoint, currentPos);
                         queue.Enqueue(nextPoint);
                     }
-                    if (map.Entities.ActiveEnemies.Any(enemy => enemy.Tank.Position == nextPoint))
+                    if (map.Entities.Dogs.Any(dog => dog.Position == nextPoint))
                     {
-                        track.Add(nextPoint, currentPos);
-                        currentTankPos = nextPoint;
+                        currentDogPos = nextPoint;
                         currentWay = ConvertTrackInfoToWay(track, nextPoint).ConvertWayToDirections();
                         return;
                     }

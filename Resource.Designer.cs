@@ -111,7 +111,7 @@ namespace BattleCity {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 1 10
+        ///   Ищет локализованную строку, похожую на 4 10
         ///##################
         ///#             #  #
         ///#    P        ####
@@ -138,7 +138,7 @@ namespace BattleCity {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 1 10
+        ///   Ищет локализованную строку, похожую на 6 10
         ///##################
         ///#  ## ##   #     #
         ///#  ##  #   ####  #
@@ -165,7 +165,7 @@ namespace BattleCity {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 1 10
+        ///   Ищет локализованную строку, похожую на 8 10
         ///##################
         ///#    #  #        #
         ///#    #  #        #
@@ -192,7 +192,7 @@ namespace BattleCity {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 1 10
+        ///   Ищет локализованную строку, похожую на 10 10
         ///##################
         ///#  ##   P#       #
         ///#   #    #       #
@@ -215,6 +215,16 @@ namespace BattleCity {
         internal static string Level4 {
             get {
                 return ResourceManager.GetString("Level4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Panin {
+            get {
+                object obj = ResourceManager.GetObject("Panin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

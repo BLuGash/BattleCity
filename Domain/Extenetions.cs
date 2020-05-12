@@ -35,5 +35,20 @@ namespace BattleCity.Domain
                 && point.X < map.Width
                 && point.Y < map.Height;
         }
+
+        public static IEnumerable<Point> GetNeighbours(this Point point)
+        {
+            yield return point + new Size(0, 1);
+            yield return point + new Size(-1, 0);
+            yield return point + new Size(1, 0);
+            yield return point + new Size(0, -1);
+        }
+
+        public static List<Direction> ConvertWayToDirections(this IEnumerable<Point> way)
+        {
+            return way
+                .Zip(way.Skip(1), (begin, end) => Game.offsetToDirection[new Size(end.X - begin.X, end.Y - begin.Y)])
+                .ToList();
+        }
     }
 }

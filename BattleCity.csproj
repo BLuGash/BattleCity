@@ -74,6 +74,7 @@
     <Compile Include="Domain\Bullet.cs" />
     <Compile Include="Domain\MapCreator.cs" />
     <Compile Include="Domain\MapEntities.cs" />
+    <Compile Include="Domain\Panin.cs" />
     <Compile Include="Domain\Tank.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -95,6 +96,7 @@
     <Compile Include="Vision\GameScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Vision\GameScreenPainter.cs" />
     <Compile Include="Vision\StartScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -133,6 +135,7 @@
     <Content Include="Images\Dog.png" />
     <Content Include="Images\Enemy.png" />
     <Content Include="Images\Heart.png" />
+    <Content Include="Images\Panin.png" />
     <Content Include="Images\Tank.png" />
     <Content Include="Images\Wall.png" />
     <Content Include="Maps\Level4.txt" />

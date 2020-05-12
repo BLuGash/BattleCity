@@ -12,6 +12,7 @@ namespace BattleCity.Domain
         public readonly HashSet<Enemy> ActiveEnemies;
         public readonly HashSet<IBullet> BulletsFlying;
         public readonly HashSet<Dog> Dogs;
+        public Panin Panin;
 
         public MapEntities()
         {

@@ -51,6 +51,12 @@ namespace BattleCity.Domain
                 .Skip(rand.Next(EmptyCells.Count))
                 .FirstOrDefault();
         }
+
+        public void SpawnPanin(Point position)
+        {
+            Entities.Panin = new Panin(position, this);
+        }
+
         public void CreateDog(Point position)
         {
             Entities.Dogs.Add(new Dog(position, this));
